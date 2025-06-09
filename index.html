@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMyA5bDktNyA5IDd2MTFhMiAyIDAgMCAxLTIgMkg1YTIgMiAwIDAgMS0yLTJ6Ij48L3BhdGg+PHBvbHlsaW5lIHBvaW50cz0iOSAyMiA5IDEyIDE1IDEyIDE1IDIyIj48L3BvbHlsaW5lPjwvc3ZnPg==" alt="Inatel">
+                <h1>Biblioteca Inatel</h1>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">RA</div>
+                <div>
+                    <div>Aluno: <strong>João Paulo</strong></div>
+                    <div>Matrícula: <strong>207</strong></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-item" data-section="available">Livros Disponíveis</div>
+            <div class="nav-item active" data-section="borrowed">Meus Empréstimos</div>
+            <div class="nav-item" data-section="debits">Meus Débitos</div>
+            <div class="nav-item" data-section="history">Histórico</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-grid">
+            <!-- Books Available Card -->
+            <div class="card section" id="available-card">
+                <div class="card-header">Livros Disponíveis</div>
+                <div class="card-body">
+                    <div id="available-books-list">
+                        <!-- Books will be populated here by JavaScript -->
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-outline" id="search-btn">Buscar Livro</button>
+                </div>
+            </div>
+
+            <!-- Borrowed Books Card -->
+            <div class="card section" id="borrowed-card">
+                <div class="card-header">Meus Empréstimos</div>
+                <div class="card-body">
+                    <div id="borrowed-books-list">
+                        <!-- Borrowed books will be populated here by JavaScript -->
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 70%;"></div>
+                    </div>
+                    <span>7 dias restantes</span>
+                </div>
+            </div>
+
+            <!-- Debits Card -->
+            <div class="card section" id="debits-card">
+                <div class="card-header">Meus Débitos</div>
+                <div class="card-body">
+                    <div class="list-item">
+                        <div>
+                            <div><strong>Multa por atraso</strong></div>
+                            <div>Livro: Introdução à Programação</div>
+                            <div>Vencimento: 15/04/2024</div>
+                        </div>
+                        <div>
+                            <div class="badge badge-danger">R$ 15,50</div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div>
+                            <div><strong>Taxa de renovação</strong></div>
+                            <div>Livro: UI/UX Design</div>
+                            <div>Vencimento: 20/04/2024</div>
+                        </div>
+                        <div>
+                            <div class="badge badge-danger">R$ 8,00</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div>Total: <strong>R$ 23,50</strong></div>
+                    <button class="btn btn-danger" id="pay-debts-btn">Pagar Débitos</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Book Detail Modal -->
+    <div class="modal" id="book-detail-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Detalhes do Livro</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="book-detail">
+                    <div class="book-cover-large">
+                        Capa do Livro
+                    </div>
+                    <div class="book-meta" id="book-detail-content">
+                        <!-- Book details will be populated here -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Período de empréstimo</label>
+                    <select class="form-control" id="loan-period">
+                        <option value="7">7 dias</option>
+                        <option value="14">14 dias</option>
+                        <option value="21">21 dias</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline modal-close">Cancelar</button>
+                <button class="btn btn-primary" id="borrow-book-btn">Alugar Livro</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Extend Loan Modal -->
+    <div class="modal" id="extend-loan-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Estender Empréstimo</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="book-detail">
+                    <div class="book-cover-large">
+                        Capa do Livro
+                    </div>
+                    <div class="book-meta" id="extend-book-detail">
+                        <!-- Book details will be populated here -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Período de extensão</label>
+                    <select class="form-control" id="extend-period">
+                        <option value="7">7 dias (R$ 5,00)</option>
+                        <option value="14">14 dias (R$ 10,00)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Forma de Pagamento</label>
+                    <select class="form-control" id="payment-method">
+                        <option value="pix">PIX</option>
+                        <option value="credit">Cartão de Crédito</option>
+                        <option value="debit">Cartão de Débito</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline modal-close">Cancelar</button>
+                <button class="btn btn-success" id="confirm-extend-btn">Confirmar Extensão</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pay Debits Modal -->
+    <div class="modal" id="pay-debits-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Pagamento de Débitos</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="list-item">
+                    <div>Multa por atraso</div>
+                    <div>R$ 15,50</div>
+                </div>
+                <div class="list-item">
+                    <div>Taxa de renovação</div>
+                    <div>R$ 8,00</div>
+                </div>
+                <div class="list-item" style="font-weight: bold;">
+                    <div>Total</div>
+                    <div>R$ 23,50</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Forma de Pagamento</label>
+                    <select class="form-control" id="debits-payment-method">
+                        <option value="pix">PIX</option>
+                        <option value="credit">Cartão de Crédito</option>
+                        <option value="debit">Cartão de Débito</option>
+                        <option value="boleto">Boleto Bancário</option>
+                    </select>
+                </div>
+                
+                <div id="pix-info" style="display: none; background-color: #f0f8ff; padding: 15px; border-radius: 5px; margin-top: 15px; text-align: center;">
+                    <p>Chave PIX: biblioteca@inatel.br</p>
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwNTZiMyIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxyZWN0IHg9IjMiIHk9IjMiIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgcng9IjIiIHJ5PSIyIj48L3JlY3Q+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iNSI+PC9jaXJjbGU+PGNpcmNsZSBjeD0iMTgiIGN5PSI2IiByPSIxIj48L2NpcmNsZT48L3N2Zz4=" alt="QR Code" style="width: 120px; height: 120px; margin: 10px auto; display: block;">
+                    <p>Valor: R$ 23,50</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline modal-close">Cancelar</button>
+                <button class="btn btn-success" id="confirm-payment-btn">Confirmar Pagamento</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toast-message">Operação realizada com sucesso!</span>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
